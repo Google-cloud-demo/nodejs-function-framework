@@ -1,11 +1,11 @@
-FROM gcr.io/google-appengine/nodejs
 
-WORKDIR /app
-
-COPY package.json /app
-RUN npm install
-COPY . /app
-
-EXPOSE 8080
-
-CMD ["npm", "start"]
+FROM node:10
+# Create and change to the app directory.
+WORKDIR /usr/src/app
+COPY package.json package*.json ./
+# Install production dependencies.
+RUN npm install --only=production
+# Copy local code to the container image.
+COPY . .
+# Run the web service on container startup.
+CMD [ "npm", "start" ]
