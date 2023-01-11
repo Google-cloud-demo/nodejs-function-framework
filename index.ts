@@ -1,4 +1,4 @@
-import express, { Express } from 'express';
-import bodyParser from 'body-parser';
+import * as functions from '@google-cloud/functions-framework';
+import app from './identity-api';
 
-export default app;
+functions.http('identityApi', app);

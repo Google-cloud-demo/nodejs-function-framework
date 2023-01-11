@@ -1,4 +1,3 @@
-
 FROM gcr.io/google-appengine/nodejs
 
 WORKDIR /app
