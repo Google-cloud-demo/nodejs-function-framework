@@ -1,26 +1,25 @@
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        docker pull ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:latest || exit 0
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - build
-      - -t
-      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA
-      - -t
-      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:latest
-      - .
-      - --cache-from
-      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:latest
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      [
-        'push',
-        '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA'
-      ]
+#steps:
+- name: 'node'
+  entrypoint: 'npm'
+  args: ['install']
+- id: 'Docker Build'
+  name: gcr.io/cloud-builders/docker
+  args: [
+    'build', 
+    '-t', 
+    'us-central1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA',
+     '-t',
+     'us-central1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:latest',
+     '.'
+   ]
+  
+  - id: 'Push to Google ACR'
+  name: gcr.io/cloud-builders/docker
+  args: [
+    'push', 
+    'us-central1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA'
+  ]
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - run
