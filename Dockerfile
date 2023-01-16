@@ -6,6 +6,6 @@ COPY package.json /app
 RUN npm install
 COPY . /app
 
-EXPOSE 9000
+EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["npm", "run" , "serve"]
