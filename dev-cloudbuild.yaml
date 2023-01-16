@@ -13,8 +13,7 @@ steps:
      'us-central1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:latest',
      '.'
    ]
-  
-  - id: 'Push to Google ACR'
+- id: 'Push to Google ACR'
   name: gcr.io/cloud-builders/docker
   args: [
     'push', 
