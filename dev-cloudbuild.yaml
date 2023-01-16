@@ -20,5 +20,5 @@ steps:
     'us-central1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA'
   ]
 images: [
-    'us-central1-docker.pkg.dev/$PROJECT_ID/omnicore-infra/management-api:$REVISION_ID'
+    'us-central1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA'
   ]
