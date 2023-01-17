@@ -22,16 +22,15 @@ steps:
 images: [
     'us-central1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA'
   ]
-- name: 'gcr.io/cloud-builders/gcloud'
+- id: "deploy"
+    name: gcr.io/cloud-builders/gcloud
+    entrypoint: bash
     args:
-      - run
-      - deploy
-      - management-api-test
-      - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA
-      - --port=8080
-      - --region=${_REGION}
-      - --memory=512Mi
-      - --platform=managed
-      - --allow-unauthenticated
-      - --min-instances=0
-      - --max-instances=5
+      - -c
+      - |
+        gcloud beta run deploy ${_SERVICE_NAME} \
+          --platform managed \
+          --region us-central1 \
+          --allow-unauthenticated \
+          --image ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$REVISION_ID \
+         
