@@ -19,9 +19,7 @@ steps:
     'push', 
     'us-central1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA'
   ]
-images: [
-    'us-central1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA'
-  ]
+
 - id: "deploy"
     name: gcr.io/cloud-builders/gcloud
     entrypoint: bash
@@ -32,5 +30,7 @@ images: [
           --platform managed \
           --region us-central1 \
           --allow-unauthenticated \
-          --image ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$REVISION_ID \
-         
+          --image ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA \
+images: [
+   'us-central1-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY_NAME}/${_SERVICE_NAME}:$SHORT_SHA'
+  ]
