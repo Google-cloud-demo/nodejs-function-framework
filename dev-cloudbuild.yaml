@@ -26,7 +26,7 @@ steps:
   args:
     - -c
     - |
-    gcloud beta run deploy ${_SERVICE_NAME} \
+  gcloud beta run deploy ${_SERVICE_NAME} \
     --platform managed \
     --region us-central1 \
     --allow-unauthenticated \
